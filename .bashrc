@@ -115,5 +115,9 @@ fi
 
 set -o vi
 
+# sets up aliases for python virtualenvs
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+
 # Colors n stuff
 PS1='[\[\e[1;35m\]\u@\h\[\e[m\] \[\e[0;37m\]\w\[\e[m\]]\[\e[0;35m\]\$\[\e[m\] \[\e[0;37m\]'

@@ -41,3 +41,6 @@ alias v.add2virtualenv='add2virtualenv'
 alias v.cdsitepackages='cdsitepackages'
 alias v.cd='cdvirtualenv'
 alias v.lssitepackages='lssitepackages'
+
+# Blueprint Aliases
+alias bpscdb='psql -d suitcase_db'

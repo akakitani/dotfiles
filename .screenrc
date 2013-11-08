@@ -1,0 +1,9 @@
+startup_message off
+
+defscrollback 1024
+
+hardstatus on
+hardstatus  alwayslastline
+hardstatus  string '%{= kM}[ %{G}%H %{M}][%= %{= kw}%?%-Lw%?%{r}(%{Y}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{M}][%{C} %Y-%m-%d %{W}%c:%s %{M}]'
+
+defutf8 on
