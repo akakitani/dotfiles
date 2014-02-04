@@ -1,0 +1,22 @@
+[user]
+	name = akakitani
+	email = atsunori.kakitani@gmail.com
+
+[alias]
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    # 'add all' stages all new+changed+deleted files
+    aa = !git ls-files -d | xargs -r git rm && git ls-files -m -o --exclude-standard | xargs -r git add
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+
+[color]
+	ui = true
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+
+[github]
+    user = akakitani

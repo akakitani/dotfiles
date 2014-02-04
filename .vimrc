@@ -1,13 +1,17 @@
 "======================================
 " Configurations
 "======================================
-" Use Vim settings, rather than Vi settings
-" This must be first, because it changes other options as a side effect.
+" Use Vim settings, rather than Vi settings " This must be first, because it changes other options as a side effect.
 set nocompatible
 set modeline
 
 syntax on " enable syntax highlighting
 filetype on " enable filetype detection
+filetype plugin on
+
+
+" Use pathogen!
+execute pathogen#infect()
 
 "Fix problems with the 'delete' key, so that it deletes characters after the
 "cursor instead of before the cursor
@@ -37,6 +41,11 @@ set smartindent
 " Enable pyflakes for simple python error-checking:
 let g:pyflakes_use_quickfix = 0 " Prevent pyflakes from using quickfix window
 
+" Colors!
+"if $COLORTERM == 'gnome-terminal'
+"  set t_Co=256
+"endif
+
 "======================================
 " Autocommands
 "======================================
@@ -62,9 +71,20 @@ if has("autocmd") && !exists("has_loaded_autocommands")
 
     " Make vim automatically source (i.e., reload) the vimrc each time it is saved
     autocmd bufwritepost .vimrc source $MYVIMRC
+
+    " Open NERDTree when vim opens
+    autocmd vimenter * NERDTree
+
 else
     set autoindent
 endif
+
+"======================================
+" Plugin Settings
+"======================================
+
+"NERDTREE
+let NERDTreeIgnore = ['\.pyc$', '\.DS_Store$']
 
 "======================================
 " Keymappings and commands
