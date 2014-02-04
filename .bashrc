@@ -121,3 +121,8 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 # Colors n stuff
 PS1='[\[\e[1;35m\]\u@\h\[\e[m\] \[\e[0;37m\]\w\[\e[m\]]\[\e[0;35m\]\$\[\e[m\] \[\e[0;37m\]'
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

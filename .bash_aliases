@@ -10,7 +10,8 @@ alias emacs="emacs -nw"
 alias targz="tar -zcvf" # archive-name.tar.gz directory-name
 
 # Unix
-alias less='less -F -r'
+#alias less='less -F -r'
+alias less='less -r'
 alias la='ls -la'
 alias sl='ls'
 function __mkmaildir {
@@ -27,7 +28,9 @@ alias rm='rm -i'
 alias rad='screen -rad'
 alias pls='fc -s | less'
 alias bashup='source ~/.bashrc; echo ".bashrc updated"'
-
+alias tnew='tmux new -s'
+alias tad='tmux attach -d -t'
+alias tls='tmux ls'
 
 
 # virtualenv aliases
