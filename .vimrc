@@ -72,9 +72,6 @@ if has("autocmd") && !exists("has_loaded_autocommands")
     " Make vim automatically source (i.e., reload) the vimrc each time it is saved
     autocmd bufwritepost .vimrc source $MYVIMRC
 
-    " Open NERDTree when vim opens
-    autocmd vimenter * NERDTree
-
 else
     set autoindent
 endif
@@ -85,17 +82,18 @@ endif
 
 "NERDTREE
 let NERDTreeIgnore = ['\.pyc$', '\.DS_Store$']
+nnoremap <C-e> :NERDTreeToggle<CR>
 
 "======================================
 " Keymappings and commands
 "======================================
 " Set pastetoggle so that when on, pasting preserves indentation from text
 " copied from external applications:
-set pastetoggle=<F2>
+set pastetoggle=<F12>
 
 " Map F5 and F6 keys to previous and next tabs:
-map <F5> :tabp<CR>
-map <F6> :tabn<CR>
+map <C-p> :tabp<CR>
+map <C-n> :tabn<CR>
 
 " CDC = Change to Directory of Current file
 if !exists(":CDC")
