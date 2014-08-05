@@ -1,25 +1,18 @@
 # ENV
-export EDITOR=vim
-export VISUAL=vim
+alias vim="mvim -v"
+
+export EDITOR='vim'
+export VISUAL='vim -f'
 export PAGER=less
 
-alias mutt="mutt -y"
-alias vi="vim"
+alias vi=vim
 alias emacs="emacs -nw"
 
 alias targz="tar -zcvf" # archive-name.tar.gz directory-name
 
 # Unix
-#alias less='less -F -r'
-alias less='less -r'
+alias ls='ls -G'
 alias la='ls -la'
-alias sl='ls'
-function __mkmaildir {
-    if [ "$1x" != 'x' ]; then
-        mkdir -p $HOME/mail/$1/{cur,new,tmp}
-    fi
-}
-alias mkmaildir='__mkmaildir'
 alias grep='grep --exclude="*.svn*"'
 alias c='clear'
 alias cp='cp -i'
@@ -45,5 +38,20 @@ alias v.cdsitepackages='cdsitepackages'
 alias v.cd='cdvirtualenv'
 alias v.lssitepackages='lssitepackages'
 
-# Blueprint Aliases
-alias bpscdb='psql -d suitcase_db'
+function setjdk {
+  local ver=${1?Usage: setjdk <version>}
+  export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
+  PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
+  export PATH=$JAVA_HOME/bin:$PATH
+}
+function _setjdk_completion (){
+  COMPREPLY=()
+
+  local cur=${COMP_WORDS[COMP_CWORD]//\\/}
+  local options=$(/usr/libexec/java_home -x | plutil -convert json -r -o - - | grep JVMVersion | sed 's/[^:]*[^"]*"\([^"]*\).*//')
+  COMPREPLY=($(compgen -W "${options}" ${cur}))
+}
+complete -F _setjdk_completion -o filenames setjdk
+
+# set TERM to 'sscreen' when SSHing
+alias ssh='TERM=screen ssh'

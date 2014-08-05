@@ -1,3 +1,6 @@
+export PATH=$PATH:$HOME/bin
+export PATH="/usr/local/bin:$PATH"
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -43,7 +46,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -56,22 +59,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -83,11 +70,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -113,16 +95,55 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# for tmux: export 256color
+[ -n "$TMUX" ] && export TERM=screen-256color
+
+# Case-insensitive tab completion
+bind "set completion-ignore-case on"
+bind "set show-all-if-ambiguous on"
+
+# Better bash completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
+
+# Make Homebrew more useable
+export HOMEBREW_CACHE="$HOME/.homebrew_caches"
+
 set -o vi
 
-# sets up aliases for python virtualenvs
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+# Java versions
+export JAVA_HOME=$(/usr/libexec/java_home)
 
-# Colors n stuff
-PS1='[\[\e[1;35m\]\u@\h\[\e[m\] \[\e[0;37m\]\w\[\e[m\]]\[\e[0;35m\]\$\[\e[m\] \[\e[0;37m\]'
+#
+# Set up PATH
+#
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# Python binaries
+export PYTHON_BIN="/Users/akakitani/Library/Python/2.7/bin"
+export PATH=$PATH:$PYTHON_BIN
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# Scala
+export SCALA_HOME="/usr/local/share/scala-2.9.2"
+export PATH=$PATH:$SCALA_HOME/bin
+
+# Logstash
+export LOGSTASH_HOME="/usr/local/share/logstash"
+
+# Storm
+export STORM_HOME="/usr/local/share/storm"
+export PATH=$PATH:$STORM_HOME/bin
+
+# Maven
+export MAVEN_HOME="/usr/local/share/maven"
+export PATH=$PATH:$MAVEN_HOME/bin
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Custom prompt.
+if [ -f ~/.bashrc ]; then
+    source ~/.bash_prompt
+fi
+
