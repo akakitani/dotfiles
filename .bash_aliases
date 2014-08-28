@@ -10,17 +10,18 @@ alias emacs="emacs -nw"
 
 alias targz="tar -zcvf" # archive-name.tar.gz directory-name
 
-# Unix
-alias ls='ls -G'
+# Using coreutils on OSX
+alias ls='ls --color=always'
 alias la='ls -la'
-alias grep='grep --exclude="*.svn*"'
+alias grep='grep --color=always'
+alias egrep='egrep --color=always'
 alias c='clear'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 alias rad='screen -rad'
 alias pls='fc -s | less'
-alias bashup='source ~/.bashrc; echo ".bashrc updated"'
+alias zshup='source ~/.zshrc; echo ".zshrc sourced"'
 alias tnew='tmux new -s'
 alias tad='tmux attach -d -t'
 alias tls='tmux ls'
@@ -38,20 +39,5 @@ alias v.cdsitepackages='cdsitepackages'
 alias v.cd='cdvirtualenv'
 alias v.lssitepackages='lssitepackages'
 
-function setjdk {
-  local ver=${1?Usage: setjdk <version>}
-  export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
-  PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
-  export PATH=$JAVA_HOME/bin:$PATH
-}
-function _setjdk_completion (){
-  COMPREPLY=()
-
-  local cur=${COMP_WORDS[COMP_CWORD]//\\/}
-  local options=$(/usr/libexec/java_home -x | plutil -convert json -r -o - - | grep JVMVersion | sed 's/[^:]*[^"]*"\([^"]*\).*//')
-  COMPREPLY=($(compgen -W "${options}" ${cur}))
-}
-complete -F _setjdk_completion -o filenames setjdk
-
-# set TERM to 'sscreen' when SSHing
-alias ssh='TERM=screen ssh'
+# Postgres
+alias start_pg='postgres -D /usr/local/var/postgre'
