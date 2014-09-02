@@ -1,0 +1,6 @@
+pane	odalc	1	:~/work/odalc	1	:*	0	:/Users/akakitani/work/odalc	1	zsh	:
+pane	odalc	2	:~/work/odalc	0	:#-	0	:/Users/akakitani/work/odalc	1	zsh	:
+pane	odalc	2	:~/work/odalc	0	:#-	1	:/Users/akakitani/work/odalc/odalc	0	zsh	:
+window	odalc	1	1	:*	d1fd,168x39,0,0,0
+window	odalc	2	0	:#-	58da,168x39,0,0{87x39,0,0,1,80x39,88,0,2}
+state	odalc	

@@ -5,20 +5,19 @@
 set nocompatible
 set modeline
 
-syntax on " enable syntax highlighting
-filetype on " enable filetype detection
-filetype plugin on
-
 
 " Use pathogen!
 execute pathogen#infect()
+execute pathogen#helptags()
+syntax on " enable syntax highlighting
+filetype plugin indent on
 
 "Fix problems with the 'delete' key, so that it deletes characters after the
 "cursor instead of before the cursor
 fixdel
 
 set number " show line number
-" set cc=80 " color columns > 80 characters
+set cc=120 " color columns > 80 characters
 "set title " show title in window console
 
 " So much status
@@ -54,9 +53,6 @@ set backspace=indent,eol,start
 " Turn on smart indenting (helps for C-like languages):
 set smartindent
 
-" Enable pyflakes for simple python error-checking:
-let g:pyflakes_use_quickfix = 0 " Prevent pyflakes from using quickfix window
-
 " Colors!
 "if $COLORTERM == 'gnome-terminal'
 "  set t_Co=256
@@ -70,16 +66,8 @@ if has("autocmd") && !exists("has_loaded_autocommands")
     " Create variable to check whether autocommands have been loaded yet
     let has_loaded_autocommands = 1
 
-    " Prevent smartindent for python files
-    autocmd FileType python set nosmartindent
-
-    filetype plugin indent on " enable loading indent file for filetype
-
     " Automatically remove all trailing whitespace:
     autocmd BufWritePre * :%s/\s\+$//e
-
-    " Make default html file-teype djangohtml to support django syntax highlighting
-    autocmd BufRead,BufNewFile *.html set filetype=htmldjango
 
     " Make vim automatically source (i.e., reload) the vimrc each time it is saved
     autocmd bufwritepost .vimrc source $MYVIMRC
@@ -91,10 +79,9 @@ endif
 "======================================
 " Plugin Settings
 "======================================
+"pymode configs
+let g:pymode_lint = 0
 
-"NERDTREE
-let NERDTreeIgnore = ['\.pyc$', '\.DS_Store$']
-nnoremap <C-e> :NERDTreeToggle<CR>
 
 "======================================
 " Keymappings and commands
