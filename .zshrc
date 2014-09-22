@@ -26,7 +26,7 @@ ZSH_THEME="atsu"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -59,11 +59,13 @@ plugins=(
     vi-mode
     heroku
     ruby
-    rvm
+    rbenv
     python
     pip
     virtualenv
     django
+    node
+    npm
     osx
     brew
 )
@@ -99,8 +101,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-#
-#
+
+bindkey '^R' history-incremental-search-backward
+
+# Set up virtualenv aliases
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
 
 test -e ~/.dircolors && \
    eval `dircolors -b ~/.dircolors`
@@ -108,3 +114,12 @@ test -e ~/.dircolors && \
 if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
+
+### Java Path
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+### Pythonrc
+export PYTHONSTARTUP=$HOME/.pythonrc

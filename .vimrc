@@ -5,12 +5,61 @@
 set nocompatible
 set modeline
 
+"filetype off
 
-" Use pathogen!
-execute pathogen#infect()
-execute pathogen#helptags()
-syntax on " enable syntax highlighting
-filetype plugin indent on
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+"" Vundle plugins
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" SOLARIZED
+Plugin 'altercation/vim-colors-solarized'
+
+" YouCompleteMe
+Plugin 'Valloric/YouCompleteMe'
+
+" Command-T
+Plugin 'wincent/command-t'
+
+" Python
+Plugin 'klen/python-mode'
+
+" Javascript
+Plugin 'pangloss/vim-javascript'
+
+" CSS Color Highlighting
+Plugin 'ap/vim-css-color'
+
+" Markdown Plugins
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+" Keybindings
+Plugin 'tpope/vim-unimpaired'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+syntax enable
+
+
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 "Fix problems with the 'delete' key, so that it deletes characters after the
 "cursor instead of before the cursor
@@ -53,6 +102,9 @@ set backspace=indent,eol,start
 " Turn on smart indenting (helps for C-like languages):
 set smartindent
 
+" For OSX - copy to system clipboard
+set clipboard=unnamed
+
 " Colors!
 "if $COLORTERM == 'gnome-terminal'
 "  set t_Co=256
@@ -81,7 +133,16 @@ endif
 "======================================
 "pymode configs
 let g:pymode_lint = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_breakpoint_bind = '' "originally <Leader>b
 
+
+"Command-T
+nnoremap <silent> <Leader>t :CommandT<CR>
+nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+let g:CommandTCursorRightMap='<Right>'
+let g:CommandTCursorLeftMap='<Left>'
+let g:CommandTAcceptSelectionSplitMap=['<C-h>', '<C-s>']
 
 "======================================
 " Keymappings and commands
@@ -91,8 +152,8 @@ let g:pymode_lint = 0
 set pastetoggle=<C-l>
 
 " Map keys to previous and next tabs:
-map <C-p> :tabp<CR>
-map <C-n> :tabn<CR>
+nnoremap <silent> <C-p> :tabp<CR>
+nnoremap <silent> <C-n> :tabn<CR>
 
 " CDC = Change to Directory of Current file
 if !exists(":CDC")
