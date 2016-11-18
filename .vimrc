@@ -5,21 +5,88 @@
 set nocompatible
 set modeline
 
-syntax on " enable syntax highlighting
-filetype on " enable filetype detection
-filetype plugin on
+"filetype off
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+"" Vundle plugins
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" SOLARIZED
+Plugin 'altercation/vim-colors-solarized'
+
+" YouCompleteMe
+Plugin 'Valloric/YouCompleteMe'
+
+" Command-T
+Plugin 'wincent/command-t'
+
+" Python
+Plugin 'klen/python-mode'
+
+" Javascript
+" Plugin 'pangloss/vim-javascript'
+
+" CSS Color Highlighting
+" Plugin 'ap/vim-css-color'
+
+" Markdown Plugins
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+" Keybindings
+Plugin 'tpope/vim-unimpaired'
+
+" Vagrant
+Plugin 'markcornick/vim-vagrant'
 
 
-" Use pathogen!
-execute pathogen#infect()
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+syntax enable
+
+
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 "Fix problems with the 'delete' key, so that it deletes characters after the
 "cursor instead of before the cursor
 fixdel
 
 set number " show line number
-" set cc=80 " color columns > 80 characters
-set title " show title in window console
+set cc=120 " color columns > 80 characters
+"set title " show title in window console
+
+" So much status
+"statusline setup
+set statusline=%1*      " set status line color
+set statusline+=%t       "tail of the filename
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%y      "filetype
+set statusline+=%=      "left/right separator
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+set laststatus=2
 
 " Use case insensitive search, except when using capital letters
 set ignorecase
@@ -38,8 +105,8 @@ set backspace=indent,eol,start
 " Turn on smart indenting (helps for C-like languages):
 set smartindent
 
-" Enable pyflakes for simple python error-checking:
-let g:pyflakes_use_quickfix = 0 " Prevent pyflakes from using quickfix window
+" For OSX - copy to system clipboard
+set clipboard=unnamed
 
 " Colors!
 "if $COLORTERM == 'gnome-terminal'
@@ -54,20 +121,8 @@ if has("autocmd") && !exists("has_loaded_autocommands")
     " Create variable to check whether autocommands have been loaded yet
     let has_loaded_autocommands = 1
 
-    " Prevent smartindent for python files
-    autocmd FileType python set nosmartindent
-
-    filetype plugin indent on " enable loading indent file for filetype
-
     " Automatically remove all trailing whitespace:
     autocmd BufWritePre * :%s/\s\+$//e
-
-    " Enable pylint for more detailed python violations:
-    autocmd FileType python compiler pylint
-    let g:pylint_onwrite = 0
-
-    " Make default html file-teype djangohtml to support django syntax highlighting
-    autocmd BufRead,BufNewFile *.html set filetype=htmldjango
 
     " Make vim automatically source (i.e., reload) the vimrc each time it is saved
     autocmd bufwritepost .vimrc source $MYVIMRC
@@ -79,21 +134,29 @@ endif
 "======================================
 " Plugin Settings
 "======================================
+"pymode configs
+let g:pymode_lint = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_breakpoint_bind = '' "originally <Leader>b
 
-"NERDTREE
-let NERDTreeIgnore = ['\.pyc$', '\.DS_Store$']
-nnoremap <C-e> :NERDTreeToggle<CR>
+
+"Command-T
+nnoremap <silent> <Leader>t :CommandT<CR>
+nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+let g:CommandTCursorRightMap='<Right>'
+let g:CommandTCursorLeftMap='<Left>'
+let g:CommandTAcceptSelectionSplitMap=['<C-h>', '<C-s>']
 
 "======================================
 " Keymappings and commands
 "======================================
 " Set pastetoggle so that when on, pasting preserves indentation from text
 " copied from external applications:
-set pastetoggle=<F12>
+set pastetoggle=<C-l>
 
-" Map F5 and F6 keys to previous and next tabs:
-map <C-p> :tabp<CR>
-map <C-n> :tabn<CR>
+" Map keys to previous and next tabs:
+nnoremap <silent> <C-p> :tabp<CR>
+nnoremap <silent> <C-n> :tabn<CR>
 
 " CDC = Change to Directory of Current file
 if !exists(":CDC")
@@ -108,6 +171,11 @@ if !exists(":DiffOrig")
           \ | wincmd p | diffthis
 endif
 
+set background=dark
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+colorscheme solarized
+
 "======================================
 " File configuration
 "======================================
@@ -115,4 +183,3 @@ endif
 set backup "Turn on backup files
 set backupdir=~/.vim/tmp "Set location to store backups
 set dir=~/.vim/tmp "Set where to store swap files
-
