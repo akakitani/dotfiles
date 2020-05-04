@@ -1,7 +1,7 @@
 "======================================
 " Configurations
 "======================================
-" Use Vim settings, rather than Vi settings " This must be first, because it changes other options as a side effect.
+" Use Vim settings, rather than Vi settings " This must be first, because it changes other options as a side effect
 set nocompatible
 set modeline
 
